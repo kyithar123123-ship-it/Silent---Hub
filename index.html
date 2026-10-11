@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silent HUB — Download v1.0.0</title>
+<meta name="description" content="Download Silent HUB v1.0.0 (13.22 MB) — Premium app by Silent.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#d4af37;--gold-light:#f5d76e;--gold-dark:#a8842a;
+  --gold-glow:rgba(212,175,55,.55);
+  --bg:#0a0a0a;--bg-2:#111;--card:rgba(20,20,20,.6);
+  --border:rgba(212,175,55,.18);--text:#f5f5f5;--muted:#a8a8a8;
+  --glass:rgba(255,255,255,.04);--header:rgba(10,10,10,.6);
+}
+[data-theme="light"]{
+  --bg:#f7f5f0;--bg-2:#efece4;--card:rgba(255,255,255,.7);
+  --border:rgba(168,132,42,.25);--text:#1a1a1a;--muted:#5a5a5a;
+  --glass:rgba(0,0,0,.03);--header:rgba(255,255,255,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter','Padauk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .4s,color .4s;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 10%,rgba(212,175,55,.14),transparent 45%),radial-gradient(circle at 85% 90%,rgba(212,175,55,.1),transparent 50%);pointer-events:none;z-index:0;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+
+#scrollBar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));z-index:9999;box-shadow:0 0 12px var(--gold-glow);transition:width .1s;}
+
+header{position:sticky;top:0;z-index:900;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:var(--header);border-bottom:1px solid var(--border);transition:background .3s;}
+.nav{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:.5px;}
+.logo-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));display:grid;place-items:center;font-weight:900;color:#0a0a0a;font-size:1rem;box-shadow:0 0 18px var(--gold-glow);}
+.logo span b{color:var(--gold);}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.icon-btn{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:var(--glass);border:1px solid var(--border);transition:.25s;font-size:1.05rem;}
+.icon-btn:hover{border-color:var(--gold);box-shadow:0 0 14px var(--gold-glow);transform:translateY(-2px);}
+.lang-btn{width:auto;padding:0 12px;font-size:.8rem;font-weight:700;display:flex;gap:4px;}
+.hamburger{display:none;}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:950;opacity:0;visibility:hidden;transition:.3s;}
+.overlay.show{opacity:1;visibility:visible;}
+.drawer{position:fixed;top:0;right:-320px;width:300px;height:100%;background:var(--bg-2);border-left:1px solid var(--border);z-index:960;padding:24px 20px;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+.drawer.show{right:0;}
+.drawer h3{font-size:.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:18px 0 8px;}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:6px;font-size:.92rem;font-weight:500;border:1px solid transparent;transition:.25s;}
+.drawer-item:hover{background:var(--glass);border-color:var(--border);transform:translateX(-4px);}
+.drawer-item .ic{font-size:1.15rem;width:22px;text-align:center;}
+
+.hero{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:70px 20px 60px;text-align:center;}
+.app-icon{width:120px;height:120px;margin:0 auto 22px;border-radius:28px;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));display:grid;place-items:center;font-size:2.6rem;font-weight:900;color:#0a0a0a;box-shadow:0 0 50px var(--gold-glow),0 20px 40px rgba(0,0,0,.5);animation:float 4s ease-in-out infinite;position:relative;}
+.app-icon::after{content:'';position:absolute;inset:-8px;border-radius:34px;border:2px solid var(--gold);opacity:.25;animation:pulse 2.5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.25;}50%{transform:scale(1.08);opacity:.05;}}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:900;letter-spacing:-1px;margin-bottom:10px;}
+.hero h1 span{background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hero .category{color:var(--muted);font-size:.95rem;margin-bottom:20px;font-weight:500;letter-spacing:.5px;}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:32px;}
+.badge{padding:7px 15px;border-radius:50px;font-size:.78rem;font-weight:600;background:var(--glass);border:1px solid var(--border);display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(8px);}
+.badge.gold{background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(212,175,55,.08));border-color:var(--gold);color:var(--gold-light);}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:blink 1.5s infinite;}
+@keyframes blink{50%{opacity:.35;}}
+.download-btn{display:inline-flex;align-items:center;gap:12px;padding:16px 42px;border-radius:16px;font-size:1.05rem;font-weight:800;letter-spacing:.3px;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));color:#0a0a0a;box-shadow:0 0 30px var(--gold-glow),0 10px 30px rgba(0,0,0,.4);position:relative;overflow:hidden;transition:transform .25s,box-shadow .3s;}
+.download-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px var(--gold-glow),0 15px 40px rgba(0,0,0,.5);}
+.download-btn:active{transform:scale(.97);}
+.download-btn .ripple{position:absolute;border-radius:50%;transform:scale(0);background:rgba(255,255,255,.6);animation:ripple .6s linear;pointer-events:none;}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+.hero .sub{margin-top:16px;font-size:.82rem;color:var(--muted);}
+
+section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:60px 20px;}
+.section-head{text-align:center;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800;margin-bottom:8px;letter-spacing:-.5px;}
+.section-head h2 span{color:var(--gold);}
+.section-head p{color:var(--muted);font-size:.92rem;}
+
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.card{padding:26px 22px;border-radius:18px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(12px);transition:.35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,175,55,.09),transparent 60%);opacity:0;transition:.35s;}
+.card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 0 30px rgba(212,175,55,.22),0 15px 30px rgba(0,0,0,.3);}
+.card:hover::before{opacity:1;}
+.card .f-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(212,175,55,.05));border:1px solid var(--border);display:grid;place-items:center;font-size:1.5rem;margin-bottom:14px;position:relative;}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:6px;position:relative;}
+.card p{font-size:.85rem;color:var(--muted);position:relative;line-height:1.55;}
+
+.shots{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+.shot{aspect-ratio:9/16;border-radius:20px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(135deg,var(--bg-2),rgba(212,175,55,.08));display:grid;place-items:center;position:relative;cursor:pointer;transition:.4s cubic-bezier(.4,0,.2,1);}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.shot:hover img{transform:scale(1.08);}
+.shot span{font-size:2.4rem;opacity:.4;transition:.4s;}
+.shot:hover{transform:scale(1.05) translateY(-5px);border-color:var(--gold);box-shadow:0 0 35px var(--gold-glow);z-index:2;}
+.shot:hover span{opacity:1;transform:scale(1.15);}
+
+.version-card{padding:22px 24px;border-radius:16px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(10px);margin-bottom:14px;transition:.3s;position:relative;border-left:3px solid var(--gold);}
+.version-card:hover{transform:translateX(6px);box-shadow:0 0 25px rgba(212,175,55,.18);}
+.version-card .vhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+.version-card .vnum{font-weight:800;font-size:1.05rem;color:var(--gold-light);}
+.version-card .vdate{font-size:.78rem;color:var(--muted);}
+.version-card ul{list-style:none;padding-left:0;}
+.version-card li{font-size:.87rem;color:var(--muted);padding:4px 0 4px 20px;position:relative;}
+.version-card li::before{content:'✦';position:absolute;left:0;color:var(--gold);font-size:.75rem;}
+
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;backdrop-filter:blur(10px);transition:.3s;}
+.faq-item.open{border-color:var(--gold);box-shadow:0 0 25px rgba(212,175,55,.16);}
+.faq-q{width:100%;text-align:left;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;font-weight:600;font-size:.95rem;color:var(--text);}
+.faq-q .arrow{color:var(--gold);font-size:1.3rem;transition:transform .35s;flex-shrink:0;}
+.faq-item.open .arrow{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+.faq-a p{padding:0 20px 18px;font-size:.87rem;color:var(--muted);line-height:1.65;}
+
+.contact-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.contact-card{display:flex;align-items:center;gap:14px;padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(10px);transition:.3s;}
+.contact-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 0 28px rgba(212,175,55,.24);}
+.contact-card .cic{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#229ED9,#1a7fb0);display:grid;place-items:center;font-size:1.4rem;color:#fff;flex-shrink:0;}
+.contact-card h4{font-size:.95rem;font-weight:700;margin-bottom:2px;}
+.contact-card p{font-size:.78rem;color:var(--muted);}
+
+footer{position:relative;z-index:1;text-align:center;padding:40px 20px 100px;border-top:1px solid var(--border);margin-top:40px;}
+footer p{font-size:.82rem;color:var(--muted);}
+footer .fbrand{color:var(--gold);font-weight:700;}
+
+#toTop{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));color:#0a0a0a;font-size:1.3rem;font-weight:900;display:grid;place-items:center;z-index:800;box-shadow:0 0 25px var(--gold-glow);opacity:0;visibility:hidden;transform:translateY(20px);transition:.35s;}
+#toTop.show{opacity:1;visibility:visible;transform:translateY(0);}
+#toTop:hover{transform:translateY(-4px) scale(1.08);}
+
+.reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.4,0,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  .hamburger{display:grid;}
+  .nav-actions .lang-btn{display:none;}
+  .hero{padding:50px 18px 40px;}
+  .app-icon{width:100px;height:100px;font-size:2.2rem;}
+  .download-btn{padding:15px 34px;font-size:.98rem;}
+  section{padding:45px 18px;}
+  .shots{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));}
+}
+@media(max-width:400px){.logo span{display:none;}}
+</style>
+</head>
+<body>
+
+<div id="scrollBar"></div>
+
+<header>
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-icon">S</div>
+      <span>Silent <b>HUB</b></span>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn lang-btn" id="langBtn"><span id="langLabel">EN</span></button>
+      <button class="icon-btn" id="themeBtn">🌙</button>
+      <button class="icon-btn hamburger" id="menuBtn">☰</button>
+    </div>
+  </nav>
+</header>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="logo" style="margin-bottom:6px;">
+    <div class="logo-icon">S</div>
+    <span>Silent <b>HUB</b></span>
+  </div>
+  <h3 data-i18n="menu">Menu</h3>
+  <a class="drawer-item" href="https://t.me/Silentxselling" target="_blank">
+    <span class="ic">📢</span><span data-i18n="ch">Telegram Channel</span></a>
+  <a class="drawer-item" href="https://t.me/Silent200923" target="_blank">
+    <span class="ic">💬</span><span data-i18n="dm">Direct Message</span></a>
+  <a class="drawer-item" href="#screenshots"><span class="ic">🖼</span><span data-i18n="sc">Screenshots</span></a>
+  <a class="drawer-item" href="#updates"><span class="ic">📝</span><span data-i18n="up">Updates</span></a>
+  <a class="drawer-item" href="#faq"><span class="ic">❓</span><span data-i18n="fq">FAQ</span></a>
+  <a class="drawer-item" href="#contact"><span class="ic">📞</span><span data-i18n="ct">Contact</span></a>
+</aside>
+
+<section class="hero">
+  <div class="app-icon">SH</div>
+  <h1>Silent <span>HUB</span></h1>
+  <p class="category" data-i18n="cat">Premium Tools & Utilities</p>
+  <div class="badges">
+    <span class="badge gold">v1.0.0</span>
+    <span class="badge"><span class="dot"></span><span data-i18n="avail">Available</span></span>
+    <span class="badge">📦 13.22 MB</span>
+    <span class="badge">🤖 Android</span>
+  </div>
+  <a href="#" class="download-btn" id="dlBtn" target="_blank" rel="noopener">
+    <span>⬇</span><span data-i18n="dl">Download APK</span>
+  </a>
+  <p class="sub" data-i18n="sub">Safe • Fast • Free — Tap to download</p>
+</section>
+
+<section id="features">
+  <div class="section-head reveal">
+    <h2>Key <span data-i18n="feat">Features</span></h2>
+    <p data-i18n="featSub">Everything you need in one place</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal"><div class="f-icon">⚡</div><h3 data-i18n="f1t">Lightning Fast</h3><p data-i18n="f1d">Optimized performance with smooth and instant response times.</p></div>
+    <div class="card reveal"><div class="f-icon">🔒</div><h3 data-i18n="f2t">Secure & Private</h3><p data-i18n="f2d">Your data stays on your device. No tracking, no spyware.</p></div>
+    <div class="card reveal"><div class="f-icon">🎨</div><h3 data-i18n="f3t">Beautiful UI</h3><p data-i18n="f3d">Modern design with dark/light theme and smooth animations.</p></div>
+    <div class="card reveal"><div class="f-icon">📱</div><h3 data-i18n="f4t">Lightweight</h3><p data-i18n="f4d">Only 13.22 MB — works perfectly on any Android device.</p></div>
+    <div class="card reveal"><div class="f-icon">🚀</div><h3 data-i18n="f5t">Always Updated</h3><p data-i18n="f5d">Regular updates with new features and improvements.</p></div>
+    <div class="card reveal"><div class="f-icon">💎</div><h3 data-i18n="f6t">Premium Quality</h3><p data-i18n="f6d">Crafted with care for the best user experience.</p></div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="section-head reveal">
+    <h2><span data-i18n="sc">Screenshots</span></h2>
+    <p data-i18n="scSub">Take a look inside Silent HUB</p>
+<div class="shots">
+  <div class="shot reveal"><img src="./screenshots/1.png" alt="Silent SHOP - Shop"></div>
+  <div class="shot reveal"><img src="./screenshots/2.png" alt="Silent SHOP - Search"></div>
+  <div class="shot reveal"><img src="./screenshots/3.png" alt="Silent SHOP - Profile"></div>
+  <div class="shot reveal"><img src="./screenshots/4.png" alt="Silent SHOP - Receipt"></div>
+</div>
+</section>
+
+<section id="updates">
+  <div class="section-head reveal">
+    <h2>Latest <span data-i18n="up">Updates</span></h2>
+    <p data-i18n="upSub">Changelog & version history</p>
+  </div>
+  <div class="version-card reveal">
+    <div class="vhead"><span class="vnum">v1.0.0</span><span class="vdate">2026</span></div>
+    <ul>
+      <li data-i18n="u1">Initial release of Silent HUB</li>
+      <li data-i18n="u2">Modern dark & light theme</li>
+      <li data-i18n="u3">Smooth animations & glassmorphism UI</li>
+      <li data-i18n="u4">Full Myanmar & English language support</li>
+    </ul>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-head reveal">
+    <h2><span data-i18n="fq">FAQ</span></h2>
+    <p data-i18n="fqSub">Frequently asked questions</p>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q"><span data-i18n="q1">How do I install Silent HUB?</span><span class="arrow">+</span></button>
+    <div class="faq-a"><p data-i18n="a1">Download the APK, enable "Install from unknown sources", and tap the file to install.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q"><span data-i18n="q2">Is Silent HUB free?</span><span class="arrow">+</span></button>
+    <div class="faq-a"><p data-i18n="a2">Yes! Silent HUB is completely free to download and use.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q"><span data-i18n="q3">Is it safe?</span><span class="arrow">+</span></button>
+    <div class="faq-a"><p data-i18n="a3">Absolutely. Silent HUB contains no malware or tracking.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q"><span data-i18n="q4">How do I get support?</span><span class="arrow">+</span></button>
+    <div class="faq-a"><p data-i18n="a4">Contact us on Telegram @Silent200923 or join @Silentxselling.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head reveal">
+    <h2><span data-i18n="ct">Contact</span></h2>
+    <p data-i18n="ctSub">Get in touch on Telegram</p>
+  </div>
+  <div class="contact-grid">
+    <a class="contact-card reveal" href="https://t.me/Silent200923" target="_blank">
+      <div class="cic">✈</div>
+      <div><h4 data-i18n="dm">Direct Message</h4><p>@Silent200923</p></div>
+    </a>
+    <a class="contact-card reveal" href="https://t.me/Silentxselling" target="_blank">
+      <div class="cic">📢</div>
+      <div><h4 data-i18n="ch">Telegram Channel</h4><p>@Silentxselling</p></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span class="fbrand">Silent HUB</span> — All rights reserved.</p>
+  <p style="margin-top:6px;font-size:.75rem;">Made with 💛 by Silent</p>
+</footer>
+
+<button id="toTop">↑</button>
+<script>
+/* ============ THEME TOGGLE ============ */
+const themeBtn = document.getElementById('themeBtn');
+const html = document.documentElement;
+const savedTheme = localStorage.getItem('theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+themeBtn.onclick = () => {
+  const cur = html.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('theme', next);
+};
+
+/* ============ DRAWER ============ */
+const menuBtn = document.getElementById('menuBtn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('overlay');
+function openDrawer(){ drawer.classList.add('show'); overlay.classList.add('show'); }
+function closeDrawer(){ drawer.classList.remove('show'); overlay.classList.remove('show'); }
+menuBtn.onclick = openDrawer;
+overlay.onclick = closeDrawer;
+drawer.querySelectorAll('a').forEach(a => a.onclick = closeDrawer);
+
+/* ============ SCROLL PROGRESS + BACK TO TOP ============ */
+const scrollBar = document.getElementById('scrollBar');
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  scrollBar.style.width = (window.scrollY / h) * 100 + '%';
+  toTop.classList.toggle('show', window.scrollY > 400);
+});
+toTop.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+
+/* ============ REVEAL ON SCROLL ============ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============ FAQ ACCORDION ============ */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.onclick = () => {
+    const item = q.parentElement;
+    const ans = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  };
+});
+
+/* ============ RIPPLE EFFECT ============ */
+document.querySelectorAll('.download-btn, .icon-btn').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.width = r.style.height = size + 'px';
+    r.style.left = (e.clientX - rect.left - size/2) + 'px';
+    r.style.top = (e.clientY - rect.top - size/2) + 'px';
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 700);
+  });
+});
+
+/* ============ LANGUAGE SYSTEM ============ */
+const translations = {
+  en: {
+    menu:"Menu", ch:"Telegram Channel", dm:"Direct Message",
+    sc:"Screenshots", up:"Updates", fq:"FAQ", ct:"Contact",
+    cat:"Premium Tools & Utilities", avail:"Available", dl:"Download APK",
+    sub:"Safe • Fast • Free — Tap to download",
+    feat:"Features", featSub:"Everything you need in one place",
+    f1t:"Lightning Fast", f1d:"Optimized performance with smooth and instant response times.",
+    f2t:"Secure & Private", f2d:"Your data stays on your device. No tracking, no spyware.",
+    f3t:"Beautiful UI", f3d:"Modern design with dark/light theme and smooth animations.",
+    f4t:"Lightweight", f4d:"Only 13.22 MB — works perfectly on any Android device.",
+    f5t:"Always Updated", f5d:"Regular updates with new features and improvements.",
+    f6t:"Premium Quality", f6d:"Crafted with care for the best user experience.",
+    scSub:"Take a look inside Silent HUB", upSub:"Changelog & version history",
+    u1:"Initial release of Silent HUB", u2:"Modern dark & light theme",
+    u3:"Smooth animations & glassmorphism UI", u4:"Full Myanmar & English language support",
+    fqSub:"Frequently asked questions",
+    q1:"How do I install Silent HUB?", a1:"Download the APK, enable 'Install from unknown sources', and tap the file to install.",
+    q2:"Is Silent HUB free?", a2:"Yes! Silent HUB is completely free to download and use.",
+    q3:"Is it safe?", a3:"Absolutely. Silent HUB contains no malware or tracking.",
+    q4:"How do I get support?", a4:"Contact us on Telegram @Silent200923 or join @Silentxselling.",
+    ctSub:"Get in touch on Telegram"
+  },
+  mm: {
+    menu:"မီနူး", ch:"Telegram ချန်နယ်", dm:"တိုက်ရိုက် မက်ဆေ့ခ်ျ",
+    sc:"ဖုန်းမျက်နှာပြင်", up:"အပ်ဒိတ်များ", fq:"မေးလေ့ရှိသည်များ", ct:"ဆက်သွယ်ရန်",
+    cat:"ပရီမီယံ ကိရိယာများ", avail:"ရရှိနိုင်ပြီ", dl:"APK ဒေါင်းလုဒ်",
+    sub:"လုံခြုံ • မြန်ဆန် • အခမဲ့ — ဒေါင်းလုဒ်ရန် နှိပ်ပါ",
+    feat:"အင်္ဂါရပ်များ", featSub:"လိုအပ်တာအားလုံး တစ်နေရာတည်းမှာ",
+    f1t:"အလွန်မြန်ဆန်", f1d:"ချောမွေ့ပြီး လျင်မြန်တဲ့ တုံ့ပြန်မှုနှုန်းနဲ့ အကောင်းဆုံး စွမ်းဆောင်ရည်။",
+    f2t:"လုံခြုံပြီး ကိုယ်ပိုင်လျှို့ဝှက်", f2d:"သင့်ဒေတာများ သင့်စက်ထဲမှာသာ ရှိသည်။ ခြေရာခံမှု မရှိပါ။",
+    f3t:"လှပသော UI", f3d:"Dark/Light theme နှင့် ချောမွေ့တဲ့ animation များ။",
+    f4t:"ပေါ့ပါး", f4d:"13.22 MB သာရှိပြီး Android ဖုန်းမှန်သမျှမှာ အဆင်ပြေစွာ လည်ပတ်နိုင်သည်။",
+    f5t:"အမြဲ အပ်ဒိတ်ဖြစ်", f5d:"အင်္ဂါရပ်အသစ်များနှင့် တိုးတက်မှုများကို ပုံမှန် အပ်ဒိတ်လုပ်ပေးသည်။",
+    f6t:"ပရီမီယံ အရည်အသွေး", f6d:"အကောင်းဆုံး အသုံးပြုသူ အတွေ့အကြုံအတွက် ဂရုတစိုက် ဖန်တီးထားသည်။",
+    scSub:"Silent HUB အတွင်းပိုင်းကို ကြည့်လိုက်ပါ", upSub:"ဗားရှင်း မှတ်တမ်းနှင့် အပ်ဒိတ်များ",
+    u1:"Silent HUB ပထမဆုံး ထုတ်ဝေမှု", u2:"ခေတ်မီ Dark & Light theme",
+    u3:"ချောမွေ့တဲ့ animation နှင့် glassmorphism UI", u4:"မြန်မာ & English ဘာသာစကား အပြည့်အစုံ",
+    fqSub:"မေးလေ့ရှိသည့် မေးခွန်းများ",
+    q1:"Silent HUB ကို ဘယ်လို ထည့်သွင်းရမလဲ?", a1:"APK ကို ဒေါင်းလုဒ်ဆွဲပါ၊ Settings မှာ 'Unknown sources မှ ထည့်သွင်းခွင့်' ကို ဖွင့်ပါ၊ ပြီးရင် ဖိုင်ကို နှိပ်ပြီး ထည့်သွင်းပါ။",
+    q2:"Silent HUB အခမဲ့လား?", a2:"ဟုတ်ကဲ့! Silent HUB ကို လုံးလုံးလျားလျား အခမဲ့ ဒေါင်းလုဒ်ဆွဲပြီး အသုံးပြုနိုင်ပါတယ်။",
+    q3:"လုံခြုံပါသလား?", a3:"သေချာပါတယ်။ Silent HUB မှာ malware သို့မဟုတ် ခြေရာခံမှု လုံးဝ မပါဝင်ပါဘူး။",
+    q4:"အကူအညီ ဘယ်လိုရမလဲ?", a4:"Telegram @Silent200923 မှာ ဆက်သွယ်ပါ သို့မဟုတ် @Silentxselling ကို join လုပ်ပါ။",
+    ctSub:"Telegram မှာ ဆက်သွယ်ပါ"
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+const langBtn = document.getElementById('langBtn');
+const langLabel = document.getElementById('langLabel');
+
+function applyLang(lang){
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  langLabel.textContent = lang === 'en' ? 'EN' : 'မြ';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.documentElement.lang = lang === 'mm' ? 'my' : 'en';
+}
+applyLang(currentLang);
+langBtn.onclick = () => applyLang(currentLang === 'en' ? 'mm' : 'en');
+
+/* ============ DOWNLOAD BUTTON — MediaFire ============ */
+const dlBtn = document.getElementById('dlBtn');
+const APK_LINK = 'https://www.mediafire.com/file/3n8irpqutvkqaz0/𝙎𝙞𝙡𝙚𝙣𝙩+𝙃𝙪𝙗_1.0.0.apk/file';
+
+dlBtn.onclick = (e) => {
+  e.preventDefault();
+  const originalHTML = dlBtn.innerHTML;
+  dlBtn.innerHTML = '<span>⏳</span><span>' + 
+    (currentLang === 'mm' ? 'ပြင်ဆင်နေသည်...' : 'Preparing...') + '</span>';
+  dlBtn.style.pointerEvents = 'none';
+  
+  setTimeout(() => {
+    dlBtn.innerHTML = '<span>✅</span><span>' + 
+      (currentLang === 'mm' ? 'စတင် ဒေါင်းလုဒ်!' : 'Starting download!') + '</span>';
+    
+    setTimeout(() => {
+      window.open(APK_LINK, '_blank');
+      setTimeout(() => {
+        dlBtn.innerHTML = originalHTML;
+        dlBtn.style.pointerEvents = 'auto';
+      }, 800);
+    }, 600);
+  }, 1200);
+};
+
+/* ============ SMOOTH SCROLL ============ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.onclick = (e) => {
+    const id = a.getAttribute('href');
+    if(id.length > 1){
+      const target = document.querySelector(id);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+  };
+});
+</script>
+</body>
+</html>
